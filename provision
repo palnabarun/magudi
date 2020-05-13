@@ -8,17 +8,14 @@ set -v # be verbose.
 # It pulls the latest code from master and runs that.
 
 # every thing is assumed to be running as root.
-cd /opt
-rm -rf magudi
-rm -rf pillar
-mkdir -p magudi
-mkdir -p pillar
+rm -rf /opt/magudi && mkdir -p /opt/magudi
+rm -rf /opt/pillar && mkdir -p /opt/pillar
 
 # download provisioning code.
-wget -qO- https://github.com/pythonindia/magudi/archive/master.tar.gz | tar xvz -C /opt/magudi --strip-components 1
+git clone git@github.com:pythonindia/magudi /opt/magudi
 
 # $PILLAR_GIT_URL should be available in the environment. (may be? /etc/environment)
-git archive --remote=ssh://$PILLAR_GIT_URL --format=tgz master | tar xvz -C /opt/pillar
+git clone git@github.com:pythonindia/pillar /opt/pillar
 
 # if salt is not installed, uncomment the following line.
 # wget -O - https://bootstrap.saltstack.com | sh
